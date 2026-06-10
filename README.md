@@ -8,11 +8,11 @@ All examples included in this repository demonstrate some unfortunate design cho
 
 1. **Single Responsibility Principle (SRP)**: A class should have only one reason to change, meaning it should have only one job or responsibility.
 
-    - Example: OrderReceipt (./OrderReceipt.ts)
-    - Example: GradeReport (./GradeExporter.ts)
+    - Example: OrderReceipt ([./OrderReceipt.ts](./OrderReceipt.ts))
+    - Example: GradeReport ([./GradeExporter.ts](./GradeExporter.ts))
 
 2. **Open/Closed Principle (OCP)**: Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
 
-    - Example: DiscountCalculator (./DiscountCalculator.ts)
-    - Example: PaymentMethods (./PaymentMethods.ts)
-    - Example: GradeExporter (./GradeExporter.ts)
+    - Example: DiscountCalculator ([./DiscountCalculator.ts](./DiscountCalculator.ts))
+    - Example: PaymentMethods ([./PaymentMethods.ts](./PaymentMethods.ts))
+    - Example: GradeExporter ([./GradeExporter.ts](./GradeExporter.ts))
