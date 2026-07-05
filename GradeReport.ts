@@ -1,17 +1,25 @@
+// Student model used to build a report card.
 type Student = {
+  // Unique student ID.
   id: string;
+  // Student display name.
   name: string;
+  // Collection of graded scores.
   scores: number[];
 };
 
+// This class mixes domain logic, formatting, storage, and delivery responsibilities.
 class GradeReport {
+  // Student data used by all report operations.
   constructor(private student: Student) {}
 
+  // Computes arithmetic mean of all student scores.
   calculateAverage(): number {
     const total = this.student.scores.reduce((sum, score) => sum + score, 0);
     return total / this.student.scores.length;
   }
 
+  // Maps average score to a letter grade.
   getLetterGrade(): string {
     const average = this.calculateAverage();
 
@@ -23,6 +31,8 @@ class GradeReport {
   }
 
   generateHtml(): string {
+    // Presentation formatting is embedded directly into the report domain object.
+    // Produces an HTML fragment for display/sharing.
     const average = this.calculateAverage();
     const letterGrade = this.getLetterGrade();
 
@@ -34,6 +44,7 @@ class GradeReport {
     `;
   }
 
+  // Persists the rendered report to a file destination.
   saveToFile(filename: string): void {
     const html = this.generateHtml();
 
@@ -41,6 +52,7 @@ class GradeReport {
     console.log(html);
   }
 
+  // Sends the rendered report to a parent email address.
   emailTo(parentEmail: string): void {
     const html = this.generateHtml();
 

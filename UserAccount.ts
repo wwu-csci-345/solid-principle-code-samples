@@ -1,15 +1,21 @@
+// Base account assumes password-based authentication behavior.
 class UserAccount {
   constructor(
+    // Unique account identifier.
     public readonly id: string,
+    // Login/contact email for the account.
     public readonly email: string,
+    // Stored password hash (simplified in this example).
     protected passwordHash: string
   ) {}
 
+  // Verifies a plaintext password against stored credentials.
   async verifyPassword(password: string): Promise<boolean> {
     // Simplified for teaching purposes.
     return password === this.passwordHash;
   }
 
+  // Changes password after validating the current password.
   async changePassword(oldPassword: string, newPassword: string): Promise<void> {
     const valid = await this.verifyPassword(oldPassword);
 
@@ -25,6 +31,7 @@ class GoogleAccount extends UserAccount {
   constructor(
     id: string,
     email: string,
+    // External identity from Google OAuth/OpenID.
     public readonly googleId: string
   ) {
     // Fake value because the parent constructor requires a password hash.
@@ -32,15 +39,18 @@ class GoogleAccount extends UserAccount {
   }
 
   async verifyPassword(password: string): Promise<boolean> {
+    // Subtype rejects a base-class behavior expected by clients.
     throw new Error("Google accounts do not support password login.");
   }
 
+  // Disabled because password changes are managed by Google.
   async changePassword(oldPassword: string, newPassword: string): Promise<void> {
     throw new Error("Google accounts do not have local passwords.");
   }
 }
 
 // Example usage:
+// This consumer expects any UserAccount subtype to support password verification.
 async function loginWithPassword(
   account: UserAccount,
   password: string

@@ -1,11 +1,18 @@
+// Normalized grade record used by exporters.
 type StudentGrade = {
+  // Student identifier.
   studentId: string;
+  // Full student name.
   studentName: string;
+  // Numeric score.
   score: number;
+  // Letter equivalent of the score.
   letterGrade: string;
 };
 
+// Template Method: export flow is fixed while subclasses customize sections.
 abstract class GradeExporter {
+  // Fixed export algorithm that delegates variable sections to subclass hooks.
   export(grades: StudentGrade[]): string {
     const header = this.createHeader();
     const body = this.createBody(grades);
@@ -14,18 +21,23 @@ abstract class GradeExporter {
     return header + body + footer;
   }
 
+  // Default title/preamble for text-oriented formats.
   protected createHeader(): string {
     return 'Student Grades\n';
   }
 
+  // Subclass-specific row/body rendering.
   protected abstract createBody(grades: StudentGrade[]): string;
 
+  // Default footer used by text-oriented formats.
   protected createFooter(): string {
     return '\nEnd of Report';
   }
 }
 
 class CsvGradeExporter extends GradeExporter {
+  // CSV output only overrides the variable part (body rows).
+  // Emits one comma-separated row per student.
   protected createBody(grades: StudentGrade[]): string {
     return grades
       .map((grade) => {
@@ -36,10 +48,13 @@ class CsvGradeExporter extends GradeExporter {
 }
 
 class HtmlGradeExporter extends GradeExporter {
+  // HTML output adjusts header/body/footer without changing export orchestration.
+  // Starts an HTML table structure for row content.
   protected createHeader(): string {
     return '<h1>Student Grades</h1><table>';
   }
 
+  // Emits HTML table rows for each grade record.
   protected createBody(grades: StudentGrade[]): string {
     return grades
       .map((grade) => {
@@ -55,6 +70,7 @@ class HtmlGradeExporter extends GradeExporter {
       .join('');
   }
 
+  // Closes the HTML table.
   protected createFooter(): string {
     return '</table>';
   }
